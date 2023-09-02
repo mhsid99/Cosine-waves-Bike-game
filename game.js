@@ -4,6 +4,16 @@ var ctx = c.getContext("2d");
 c.width = window.innerWidth; 
 c.height = window.innerHeight-10;
 document.body.appendChild(c);
+window.addEventListener('resize', () => {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight - 10;
+
+    // Adjust player position and size based on new canvas size
+    player.x = (player.x / (c.width - 10)) * c.width;
+    player.y = (player.y / (c.height - 10)) * c.height;
+
+    // Adjust other properties like image size similarly
+});
 
 //generates random unique numbers between 0 and 254 in perm array
 var perm = [];
@@ -101,7 +111,7 @@ var Player=function(){
         ctx.save();//save the context
         ctx.translate(this.x, this.y);//move the canvas according to player
         ctx.rotate(this.rot);//rotate the bike
-        ctx.drawImage(this.img,-25,-25,50,50);//placement and size of bike
+        ctx.drawImage(this.img,-35,-35,50,50);//placement and size of bike
         ctx.restore();//restore the conditions after starting again
     }
 }
@@ -174,13 +184,13 @@ function restart()
 loop();//start the game
 
 //printout the instructions
-var instructions=document.createElement("div");
-instructions.style.position="absolute";
-instructions.style.top="10px"; // Adjust this value as needed
-instructions.style.left="10px"; // Adjust this value as needed
-instructions.style.color="#fff";
-instructions.style.fontFamily="raleway";
-instructions.style.fontSize="26px";
-instructions.style.zIndex="9999"; // Ensure it appears on top of the canvas
-instructions.innerHTML="[up] [down] = accelerate <br> [Left] [Right] = rotate";
+var instructions = document.createElement("div");
+instructions.style.position = "absolute";
+instructions.style.top = "10px"; // Adjust this value as needed
+instructions.style.left = "10px"; // Adjust this value as needed
+instructions.style.color = "#fff";
+instructions.style.fontFamily = "raleway";
+instructions.style.fontSize = "26px";
+instructions.style.zIndex = "9999"; // Ensure it appears on top of the canvas
+instructions.innerHTML = "[up] [down] = accelerate <br> [Left] [Right] = rotate";
 document.body.appendChild(instructions);
