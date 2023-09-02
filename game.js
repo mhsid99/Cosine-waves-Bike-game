@@ -106,25 +106,6 @@ var Player=function(){
     }
 }
 
-// Function to handle keydown and keyup events
-function handleKeyEvent(event) {
-    if (event.type === 'keydown') {
-        k[event.key] = 1;
-        isKeyPressed = true;
-        
-        //audio2.play();
-    } else if (event.type === 'keyup') {
-        k[event.key] = 0;
-        isKeyPressed = false;
-        //audio2.pause();
-        
-    }
-}
-
-window.addEventListener('keydown', handleKeyEvent);
-window.addEventListener('keyup', handleKeyEvent);
-//let me know if the car is being accelerated
-
 // Initialize variables for time, speed, gameplay, Audio and player
 var player=new Player();//instance of a player; object
 var t=0;
@@ -132,13 +113,12 @@ var speed=0;
 var playing=true;
 var k={ArrowUp:0, ArrowDown:0, ArrowLeft:0, ArrowRight:0};
 var startTime=Date.now();
-var dayNightDuration=15000; // 15 seconds
-var audio2=new Audio('2.mp3');
+var dayNightDuration=15000; // 15 seconds   
 var audio1=new Audio('1.mp3');
 var isKeyPressed=false;
 
-function loop(){
-   
+function loop()
+{
     //console.log(isKeyPressed);
     speed -= (speed - (k.ArrowUp - k.ArrowDown)) * 0.01;
     t += 10 * speed;
@@ -152,7 +132,7 @@ function loop(){
     ctx.fillStyle = "rgba(0,0,0,0.25)";//the color of mountains behind the sky, 25% opacity 
     ctx.beginPath();//this is the path for mountains
     ctx.moveTo(0, c.height);
-    for (let i = 0; i < c.width; i++)
+    for (let i=0; i<c.width; i++)
     {
         ctx.lineTo(i, c.height*0.8 - noise(t + i*5) * 0.25);//structure of mountains behind the sky
     }
@@ -160,12 +140,12 @@ function loop(){
     ctx.fill();
 
 //___________construction of ground_________________________
-    ctx.fillStyle = "#444";//this is ground color
+    
     ctx.beginPath();//start a path for the ground
-
+    ctx.fillStyle = "#444";//this is ground color
     ctx.moveTo(0, c.height);
-    for (let i = 0; i < c.width; i++)
-        ctx.lineTo(i, c.height - noise(t + i) * 0.25);
+    for (let i=0; i<c.width; i++)
+        ctx.lineTo(i, c.height - noise(t + i) * 0.35);
     ctx.lineTo(c.width, c.height);
     ctx.fill();
 
@@ -182,7 +162,8 @@ function loop(){
 onkeydown= (d)=>k[d.key]=1;
 onkeyup= (d)=>k[d.key]=0;
 
-function restart(){
+function restart()
+{
     player=new Player();
     t=0;
     speed=0;
